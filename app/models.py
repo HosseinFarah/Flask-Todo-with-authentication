@@ -4,7 +4,8 @@ import sqlalchemy.orm as so
 from typing import Optional
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime, timezone
+from datetime import datetime
+from pytz import timezone
 
 class User(UserMixin , db.Model):
     __tablename__ = 'users'
@@ -19,9 +20,9 @@ class User(UserMixin , db.Model):
     phone: so.Mapped[str] = so.mapped_column(sa.String(15), unique=True)
     is_admin: so.Mapped[bool] = so.mapped_column(sa.Boolean, default=False)
     is_active: so.Mapped[bool] = so.mapped_column(sa.Boolean, default=True)
-    last_login: so.Mapped[Optional[sa.DateTime]] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone.utc))
-    created_at: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    last_login: so.Mapped[Optional[sa.DateTime]] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone('Europe/Helsinki')))
+    created_at: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone('Europe/Helsinki')))
+    updated_at: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone('Europe/Helsinki')), onupdate=lambda: datetime.now(timezone('Europe/Helsinki')))
 
     def __repr__(self) -> str:
         return f"<User {self.email}>"
@@ -41,9 +42,9 @@ class Todo(db.Model):
     # status with enum values of 'pending', 'completed', 'in-progress'
     status: so.Mapped[str] = so.mapped_column(sa.String(20))
     user_id: so.Mapped[int] = so.mapped_column(sa.Integer, sa.ForeignKey(User.id), nullable=False)
-    date_todo: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime,nullable=False, default=lambda: datetime.now(timezone.utc))    
-    created_at: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    date_todo: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime,nullable=False, default=lambda: datetime.now(timezone('Europe/Helsinki')))    
+    created_at: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone('Europe/Helsinki')))
+    updated_at: so.Mapped[sa.DateTime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone('Europe/Helsinki')), onupdate=lambda: datetime.now(timezone('Europe/Helsinki')))
     
     
     
