@@ -85,4 +85,26 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"
     ></script>
+
+    <!-- JavaScript to logout the user after 5 minutes of inactivity -->
+    <script type="text/javascript">
+        var inactivityTime = function () {
+            var time;
+            window.onload = resetTimer;
+            document.onmousemove = resetTimer;
+            document.onkeypress = resetTimer;
+    
+            function logout() {
+                // Redirect to the logout route after 5 minutes of inactivity
+                window.location.href = "{{ url_for('logout_inactive') }}";
+            }
+    
+            function resetTimer() {
+                clearTimeout(time);
+                time = setTimeout(logout, 5 * 60 * 1000);  // 5 minutes in milliseconds
+            }
+        };
+    
+        inactivityTime();  // Start the timer
+    </script>
 </html>

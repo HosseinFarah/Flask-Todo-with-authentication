@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from config import Config
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
+from datetime import timedelta
 
 load_dotenv()
 app=Flask(__name__)
@@ -16,5 +17,7 @@ login = LoginManager(app)
 login.login_view = 'login'
 app.config['UPLOAD_FOLDER'] = Config.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=5)
+app.config['LOGOUT_INACTIVE'] = timedelta(minutes=5)
 
 from app import routes, models

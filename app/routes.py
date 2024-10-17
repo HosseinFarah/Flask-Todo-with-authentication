@@ -1,4 +1,5 @@
 from app import app, db, login
+from flask import session
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, AddTodoForm, EditTodoForm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -17,6 +18,11 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_login = datetime.now(timezone.utc)
         db.session.commit()
+        
+@app.before_request
+def check_session_timeout():
+    session.permanent = True
+    app.permanent_session_lifetime = app.config['LOGOUT_INACTIVE']
         
 @app.route('/')
 @app.route('/index')
@@ -138,3 +144,11 @@ def delete_todo(id):
     db.session.commit()
     flash('Your todo has been deleted.')
     return redirect(url_for('index'))   
+
+
+# logout user after 5 minutes of inactivity
+@app.route('/logout_inactive')
+def logout_inactive():
+    logout_user()
+    return redirect(url_for('index'))
+
