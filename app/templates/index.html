@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Home</h1>
+<p class="badge badge-primary">Hello dear {{current_user.firstname}}</p>
+<a href="{{url_for('add_todo')}}" class="btn btn-primary"
+    ><i class="fa fa-plus"></i> Add Todo</a
+>
+<hr />
+{% if todos|length == 0 %}
+<div class="alert alert-info">
+    <p>No todos found</p>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row">
+        <!-- add new todo -->
+        {% for todo in todos %} {% if todo.user_id == current_user.id %}
+        <div class="col-md-4">
+            <div class="card m-1">
+                {% if todo.status == 'completed' %}
+                <div class="card-header bg-success">
+                    <h5>{{todo.title}}</h5>
+                </div>
+                {% elif todo.status == 'in-progress' %}
+                <div class="card-header bg-warning">
+                    <h5>{{todo.title}}</h5>
+                </div>
+                {% else %}
+                <div class="card-header">
+                    <h5>{{todo.title}}</h5>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <p>Description: {{todo.description}}</p>
+                    <p>{{todo.status}}</p>
+                </div>
+                <div class="card-footer">
+                    <small>
+                        Date: {{todo.date_todo.strftime('%Y-%m-%d')}}</small
+                    >
+                    <p>
+                        <small
+                            >Created on: {{todo.created_at.strftime('%Y-%m-%d
+                            %H:%M:%S')}}</small
+                        >
+                    </p>
+                    <a
+                        href="{{url_for('edit_todo', id=todo.id)}}"
+                        class="btn btn-primary"
+                        ><i class="fa fa-edit"></i> Edit</a
+                    >
+                    <a
+                        href="{{url_for('delete_todo', id=todo.id)}}"
+                        class="btn btn-danger"
+                        ><i class="fa fa-trash"></i> Delete</a
+                    >
+                </div>
+            </div>
+        </div>
+        {% endif %} {% endfor %}
+    </div>
+</div>
+{% endblock %}

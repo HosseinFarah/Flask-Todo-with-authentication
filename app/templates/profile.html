@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Profile</h1>
+<div class="row d-flex justify-content-start">
+  <div class="col-md-4">
+    <div class="card">
+        <img src="{{url_for('static', filename='uploads/users/' + current_user.image)}}" class="card-img-top" alt="Profile Picture"">
+        <div class="card-body">
+            <h5 class="card-title">Fullname: {{current_user.firstname}} {{current_user.lastname}}</h5>
+            <p class="card-text">Address: {{current_user.address}} | Zipcode: {{current_user.zipcode}}</p>
+            <a href="{{url_for('edit_profile')}}" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
