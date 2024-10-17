@@ -2,6 +2,7 @@
 <h1>Home</h1>
 <p class="badge badge-primary">Hello dear {{current_user.firstname}}</p>
 <a href="{{url_for('add_todo')}}" class="btn btn-primary"
+data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Create new todo"
     ><i class="fa fa-plus"></i> Add Todo</a
 >
 <hr />
@@ -15,7 +16,7 @@
         <!-- add new todo -->
         {% for todo in todos %} {% if todo.user_id == current_user.id %}
         <div class="col-md-4">
-            <div class="card m-1">
+            <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
                 {% if todo.status == 'completed' %}
                 <div class="card-header bg-success">
                     <h5>{{todo.title}}</h5>
@@ -35,24 +36,27 @@
                 </div>
                 <div class="card-footer">
                     <small>
-                        Date: {{todo.date_todo.strftime('%Y-%m-%d')}}</small
+                        Date to do: <span class="badge text-bg-secondary fs-6">{{todo.date_todo.strftime('%Y-%m-%d')}}</span></small
                     >
                     <p>
                         <small
-                            >Created on: {{todo.created_at.strftime('%Y-%m-%d
-                            %H:%M:%S')}}</small
+                            >Created on: <span class="badge text-bg-primary"> {{todo.created_at.strftime('%Y-%m-%d
+                            %H:%M:%S')}}</span></small
                         >
                     </p>
+                    <div class="text-end">
                     <a
                         href="{{url_for('edit_todo', id=todo.id)}}"
-                        class="btn btn-primary"
-                        ><i class="fa fa-edit"></i> Edit</a
+                        class="btn btn-primary" 
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"
+                        ><i class="fa fa-edit"></i> </a
                     >
                     <a
                         href="{{url_for('delete_todo', id=todo.id)}}"
-                        class="btn btn-danger"
-                        ><i class="fa fa-trash"></i> Delete</a
+                        class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"
+                        ><i class="fa fa-trash"></i> </a
                     >
+                </div>
                 </div>
             </div>
         </div>

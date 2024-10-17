@@ -17,8 +17,5 @@ login = LoginManager(app)
 login.login_view = 'login'
 app.config['UPLOAD_FOLDER'] = Config.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
-app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=5)
-app.config['SESSION_PERMANENT'] = True
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
 from app import routes, models

@@ -19,22 +19,7 @@ def before_request():
         current_user.last_login = datetime.now(timezone.utc)
         db.session.commit()
         
-@app.before_request
-def check_inactivity():
-    session.permanent = True
-    session.modified = True  # This keeps the session active when the user is interacting
 
-    # Check if user is logged in
-    if 'last_activity' in session:
-        now = datetime.now()
-        last_activity = session['last_activity']
-
-        # If the time since the last activity is more than 5 minutes
-        if (now - last_activity).total_seconds() > 300:  # 300 seconds = 5 minutes
-            return redirect(url_for('logout_inactive'))
-
-    # Update last_activity for every new request
-    session['last_activity'] = datetime.now()
         
 @app.route('/')
 @app.route('/index')
@@ -158,10 +143,4 @@ def delete_todo(id):
     return redirect(url_for('index'))   
 
 
-# logout user after 5 minutes of inactivity
-@app.route('/logout_inactive')
-def logout_inactive():
-    logout_user()
-    session.pop('last_activity', None)  # Remove last_activity from session
-    return redirect(url_for('index'))
 
