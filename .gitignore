@@ -1,5 +1,6 @@
 # .gitignore
-
+/static/*
+!/static/README.md
 # Python
 __pycache__/
 *.py[cod]
@@ -32,5 +33,3 @@ migrations/
 .Trashes
 ehthumbs.db
 Thumbs.db
-/static/*
-!/static/README.md
